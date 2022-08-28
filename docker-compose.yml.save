@@ -1,0 +1,34 @@
+version: "3.8"
+volumes:
+    sqlserver-data:
+services:
+  db:
+    build:
+       context: .
+    container_name: sql-server-db
+    #image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - sqlserver-data:/var/lib/mssqlql/data
+    environment:
+      SA_PASSWORD: "Spark-It2020"
+      ACCEPT_EULA: "Y"
+    networks:
+      - authentication_network
+    adminer:
+    image: $IMAGE
+    depends_on:
+      - mariadb
+    environment:
+      ADMINER_DEFAULT_DB_DRIVER: mysql
+      ADMINER_DEFAULT_DB_HOST: mariadb
+      ADMINER_DEFAULT_DB_NAME: adminer
+      ADMINER_DESIGN: nette
+      ADMINER_PLUGINS: tables-filter tinymce
+    ports:
+      - 8080:9000
+networks:
+  authentication_network:
+      name: authentication_network
+      driver: bridge 
