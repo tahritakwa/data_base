@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'docker build -t auth_image .'
+                sh 'docker build -t auth_image .'
             }
         }
         stage('docker') {
             steps {
-                echo 'docker-compose up --build -d'
+                sh 'docker-compose up --build -d'
             }
         }
     }
